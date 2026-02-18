@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>املاک بزرگ آلفا | سرمایه‌گذاری بین‌المللی در ایران و قبرس شمالی</title>
+    <meta name="description" content="املاک بزرگ آلفا - پیشرو در سرمایه‌گذاری املاک با +15 سال سابقه، +500 معامله موفق و تیم حقوقی تخصصی">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #D4AF37; --dark-gold: #B8941F; --light-gold: #FFD700;
+            --bg-dark: #0a0a0a; --bg-card: #1a1a1a; --bg-light: #2a2a2a;
+            --text-primary: #ffffff; --text-secondary: #b0b0b0;
+            --success: #4CAF50; --danger: #F44336;
+        }
+        body { font-family: 'Vazirmatn', sans-serif; background: var(--bg-dark); color: var(--text-primary); overflow-x: hidden; line-height: 1.6; scroll-behavior: smooth; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Loading */
+        .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 99999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; transition: opacity 0.5s; }
+        .loader.hidden { opacity: 0; pointer-events: none; }
+        .loader-logo { width: 150px; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
+        .loader-bar { width: 200px; height: 4px; background: rgba(212,175,55,0.2); border-radius: 10px; overflow: hidden; }
+        .loader-progress { height: 100%; background: linear-gradient(90deg, var(--gold), var(--light-gold)); width: 0%; transition: width 0.3s; }
+        
+        /* Navbar */
+        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,175,55,0.2); transition: all 0.3s; }
+        .navbar.scrolled { background: rgba(10,10,10,0.98); box-shadow: 0 5px 30px rgba(0,0,0,0.5); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; max-width: 1600px; margin: 0 auto; }
+        .nav-logo { height: 50px; }
+        .nav-menu { display: flex; gap: 30px; list-style: none; align-items: center; }
+        .nav-menu a { color: var(--text-primary); text-decoration: none; font-weight: 500; transition: all 0.3s; padding: 8px 16px; border-radius: 8px; }
+        .nav-menu a:hover { color: var(--gold); background: rgba(212,175,55,0.1); }
+        .nav-cta { background: linear-gradient(135deg, var(--gold), var(--dark-gold)); color: #000; padding: 10px 25px; border-radius: 25px; font-weight: 700; }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(212,175,55,0.4); }
+        
+        /* WhatsApp Float */
+        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; z-index: 9999; width: 65px; height: 65px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; text-decoration: none; box-shadow: 0 5px 25px rgba(37,211,102,0.5); animation: pulse-wp 2s infinite; }
+        @keyframes pulse-wp { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+        
+        /* Language */
+        .language-toggle { position: fixed; top: 90px; left: 20px; z-index: 1000; display: flex; gap: 10px; }
+        .lang-btn { background: rgba(212,175,55,0.1); border: 2px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .lang-btn:hover, .lang-btn.active { background: var(--gold); color: #000; }
+        
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(10,10,10,0.9), rgba(26,26,26,0.8)); }
+        .particles { position: absolute; width: 100%; height: 100%; }
+        .particle { position: absolute; width: 3px; height: 3px; background: var(--gold); border-radius: 50%; animation: float 15s infinite; opacity: 0.3; }
+        @keyframes float { 0%, 100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-100px) translateX(100px); } }
+        .hero-content { text-align: center; z-index: 10; padding: 40px 20px; }
+        .company-logo { width: 280px; margin: 0 auto 40px; display: block; filter: drop-shadow(0 15px 40px rgba(212,175,55,0.6)); animation: glow 3s infinite; }
+        @keyframes glow { 0%, 100% { filter: drop-shadow(0 15px 40px rgba(212,175,55,0.6)); } 50% { filter: drop-shadow(0 20px 60px rgba(212,175,55,0.9)); } }
+        .hero-title { font-size: clamp(2rem, 6vw, 4.5rem); font-weight: 900; margin-bottom: 20px; background: linear-gradient(135deg, var(--light-gold), var(--gold), var(--dark-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text-secondary); margin-bottom: 15px; }
+        .hero-badges { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
+        .badge { background: rgba(212,175,55,0.1); border: 2px solid var(--gold); padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 10px; color: var(--gold); font-weight: 600; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+        .btn { padding: 18px 45px; border-radius: 50px; font-size: 1.1rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 12px; transition: all 0.3s; position: relative; overflow: hidden; }
+        .btn-primary { background: linear-gradient(135deg, var(--gold), var(--dark-gold)); color: #000; box-shadow: 0 10px 30px rgba(212,175,55,0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212,175,55,0.5); }
+        .btn-secondary { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-secondary:hover { background: var(--gold); color: #000; }
+        
+        /* Trust Bar */
+        .trust-bar { background: rgba(212,175,55,0.05); border-top: 1px solid rgba(212,175,55,0.2); border-bottom: 1px solid rgba(212,175,55,0.2); padding: 30px 20px; }
+        .trust-container { display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .trust-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .trust-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold), var(--dark-gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #000; }
+        .trust-text { font-size: 0.9rem; color: var(--text-secondary); text-align: center; font-weight: 600; }
+        
+        /* Stats */
+        .stats-section { padding: 120px 20px; background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 50%, var(--bg-dark) 100%); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; }
+        .stat-card { background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(212,175,55,0.02)); border: 2px solid rgba(212,175,55,0.2); border-radius: 25px; padding: 50px 30px; text-align: center; transition: all 0.4s; position: relative; overflow: hidden; }
+        .stat-card:hover { border-color: var(--gold); transform: translateY(-15px); box-shadow: 0 20px 50px rgba(212,175,55,0.3); }
+        .stat-icon { font-size: 4rem; color: var(--gold); margin-bottom: 25px; }
+        .stat-number { font-size: 4rem; font-weight: 900; color: var(--gold); margin-bottom: 15px; }
+        .stat-label { font-size: 1.3rem; color: var(--text-secondary); font-weight: 600; }
+        
+        /* Services */
+        .services-section { padding: 120px 20px; background: var(--bg-dark); }
+        .section-title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; text-align: center; margin-bottom: 20px; background: linear-gradient(135deg, var(--light-gold), var(--gold), var(--dark-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { text-align: center; font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 70px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; }
+        .service-card { background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(10,10,10,0.8)); border: 2px solid rgba(212,175,55,0.2); border-radius: 30px; padding: 50px 40px; text-align: center; transition: all 0.4s; position: relative; overflow: hidden; }
+        .service-card:hover { border-color: var(--gold); transform: translateY(-15px) scale(1.02); box-shadow: 0 25px 60px rgba(212,175,55,0.3); }
+        .service-icon-wrapper { width: 100px; height: 100px; background: linear-gradient(135deg, var(--gold), var(--dark-gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 2.5rem; color: #000; box-shadow: 0 10px 30px rgba(212,175,55,0.4); }
+        .service-card h3 { font-size: 1.6rem; color: var(--gold); margin-bottom: 20px; font-weight: 700; }
+        .service-card p { color: var(--text-secondary); line-height: 1.9; font-size: 1.05rem; }
+        
+        /* Properties */
+        .properties-section { padding: 120px 20px; background: linear-gradient(180deg, var(--bg-card), var(--bg-dark)); }
+        .properties-slider { position: relative; max-width: 1400px; margin: 0 auto; }
+        .slider-container { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; padding: 20px 0; scrollbar-width: none; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .property-card { min-width: 380px; background: var(--bg-card); border-radius: 25px; overflow: hidden; border: 2px solid rgba(212,175,55,0.2); transition: all 0.4s; }
+        .property-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(212,175,55,0.3); }
+        .property-image { position: relative; height: 280px; overflow: hidden; }
+        .property-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .property-card:hover .property-image img { transform: scale(1.1); }
+        .property-badge { position: absolute; top: 20px; right: 20px; background: var(--gold); color: #000; padding: 10px 25px; border-radius: 25px; font-weight: 700; font-size: 1rem; }
+        .property-info { padding: 30px; }
+        .property-info h3 { font-size: 1.6rem; margin-bottom: 15px; color: var(--text-primary); font-weight: 700; }
+        .property-location { color: var(--text-secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+        .property-features { display: flex; gap: 25px; margin-bottom: 20px; padding: 20px 0; border-top: 1px solid rgba(212,175,55,0.2); border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .property-features span { display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-size: 1.05rem; }
+        .property-price { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--gold); border: none; color: #000; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 10; font-size: 1.3rem; }
+        .slider-btn:hover { transform: translateY(-50%) scale(1.1); box-shadow: 0 10px 30px rgba(212,175,55,0.5); }
+        .slider-btn.prev { right: -25px; }
+        .slider-btn.next { left: -25px; }
+        
+        /* About */
+        .about-section { padding: 120px 20px; background: var(--bg-dark); }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 60px; max-width: 1400px; margin: 0 auto; }
+        .about-card { background: rgba(212,175,55,0.05); border: 2px solid var(--gold); border-radius: 30px; padding: 50px; position: relative; overflow: hidden; }
+        .golden-border { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--light-gold), var(--gold), var(--dark-gold)); }
+        .profile-image-container { text-align: center; margin-bottom: 35px; }
+        .profile-image { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 6px solid var(--gold); box-shadow: 0 15px 50px rgba(212,175,55,0.5); }
+        .about-card h3 { font-size: 2.2rem; color: var(--gold); margin-bottom: 12px; text-align: center; font-weight: 800; }
+        .about-role { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 35px; text-align: center; font-weight: 600; }
+        .about-features { list-style: none; margin-bottom: 35px; }
+        .about-features li { padding: 18px 0; display: flex; align-items: start; gap: 18px; border-bottom: 1px solid rgba(212,175,55,0.1); font-size: 1.05rem; }
+        .about-features i { color: var(--gold); font-size: 1.4rem; margin-top: 3px; }
+        .contact-buttons { display: flex; flex-direction: column; gap: 18px; }
+        .contact-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 18px; border-radius: 15px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 600; transition: all 0.3s; direction: ltr; font-size: 1.05rem; }
+        .contact-btn:hover { background: var(--gold); color: #000; }
+        .contact-form-container { background: rgba(212,175,55,0.05); border: 2px solid rgba(212,175,55,0.2); border-radius: 30px; padding: 50px; }
+        .contact-form-container h3 { font-size: 2rem; margin-bottom: 35px; color: var(--gold); font-weight: 800; }
+        .contact-form { display: flex; flex-direction: column; gap: 22px; }
+        .contact-form input, .contact-form select, .contact-form textarea { background: rgba(255,255,255,0.05); border: 2px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 18px 22px; color: var(--text-primary); font-family: 'Vazirmatn', sans-serif; font-size: 1.05rem; transition: all 0.3s; }
+        .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,0.08); }
+        .submit-btn { background: linear-gradient(135deg, var(--gold), var(--dark-gold)); color: #000; border: none; padding: 20px; border-radius: 12px; font-size: 1.15rem; font-weight: 700; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,175,55,0.4); }
+        
+        /* Testimonials */
+        .testimonials-section { padding: 120px 20px; background: linear-gradient(180deg, var(--bg-card), var(--bg-dark)); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; }
+        .testimonial-card { background: rgba(212,175,55,0.05); border: 2px solid rgba(212,175,55,0.2); border-radius: 25px; padding: 40px; transition: all 0.3s; }
+        .testimonial-card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 20px 50px rgba(212,175,55,0.3); }
+        .stars { color: var(--gold); font-size: 1.2rem; margin-bottom: 20px; }
+        .quote-icon { font-size: 3rem; color: var(--gold); opacity: 0.3; margin-bottom: 18px; }
+        .testimonial-text { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.9; margin-bottom: 28px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 18px; }
+        .author-avatar { width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold), var(--dark-gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #000; font-weight: 700; }
+        .author-info h4 { color: var(--gold); font-size: 1.15rem; margin-bottom: 5px; font-weight: 700; }
+        .author-info p { color: var(--text-secondary); font-size: 0.95rem; }
+        
+        /* Map */
+        .map-section { padding: 120px 20px; background: var(--bg-dark); }
+        .map-container { max-width: 1200px; margin: 0 auto; }
+        .map-wrapper { border-radius: 25px; overflow: hidden; border: 3px solid var(--gold); box-shadow: 0 20px 60px rgba(212,175,55,0.3); }
+        .map-wrapper iframe { width: 100%; height: 500px; border: none; display: block; }
+        .map-info { display: flex; align-items: center; gap: 25px; background: rgba(212,175,55,0.05); border: 2px solid rgba(212,175,55,0.2); border-radius: 20px; padding: 30px; margin-top: 30px; flex-wrap: wrap; }
+        .map-info i { font-size: 3rem; color: var(--gold); }
+        .map-info-text h3 { color: var(--gold); font-size: 1.5rem; margin-bottom: 10px; font-weight: 700; }
+        .map-info-text p { color: var(--text-secondary); font-size: 1.1rem; }
+        
+        /* Footer */
+        .footer { background: linear-gradient(180deg, var(--bg-card), var(--bg-dark)); padding: 80px 20px 40px; border-top: 2px solid rgba(212,175,55,0.2); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
+        .footer-logo h3 { font-size: 2rem; color: var(--gold); margin-bottom: 12px; font-weight: 800; }
+        .footer-logo p { color: var(--text-secondary); font-size: 1.1rem; }
+        .social-links { display: flex; gap: 22px; }
+        .social-btn { width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: all 0.3s; text-decoration: none; }
+        .social-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+        .social-btn.telegram { background: #0088cc; color: #fff; }
+        .social-btn.whatsapp { background: #25D366; color: #fff; }
+        .social-btn:hover { transform: translateY(-7px) scale(1.15); box-shadow: 0 15px 35px rgba(212,175,55,0.4); }
+        .footer-bottom { text-align: center; padding-top: 35px; border-top: 1px solid rgba(212,175,55,0.2); color: var(--text-secondary); font-size: 1.05rem; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid, .services-grid { grid-template-columns: 1fr; }
+            .nav-menu { display: none; }
+            .slider-btn { display: none; }
+            .property-card { min-width: 320px; }
+            .company-logo { width: 220px; }
+            .map-wrapper iframe { height: 350px; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero-buttons, .cta-buttons { flex-direction: column; width: 100%; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loader" id="loader">
+        <img src="logo.png" alt="املاک بزرگ آلفا" class="loader-logo">
+        <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+    </div>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/989121799211" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="lang-btn active" data-lang="fa">🇮🇷 FA</button>
+        <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <img src="logo.png" alt="املاک بزرگ آلفا" class="nav-logo">
+            <ul class="nav-menu">
+                <li><a href="#home" data-fa="خانه" data-en="Home">خانه</a></li>
+                <li><a href="#services" data-fa="خدمات" data-en="Services">خدمات</a></li>
+                <li><a href="#properties" data-fa="املاک" data-en="Properties">املاک</a></li>
+                <li><a href="#about" data-fa="درباره ما" data-en="About">درباره ما</a></li>
+                <li><a href="#contact" class="nav-cta" data-fa="تماس با ما" data-en="Contact">تماس با ما</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <img src="logo.png" alt="املاک بزرگ آلفا" class="company-logo">
+            <h1 class="hero-title" data-fa="املاک بزرگ آلفا" data-en="Alpha Grand Real Estate">املاک بزرگ آلفا</h1>
+            <p class="hero-subtitle" data-fa="پیشرو در سرمایه‌گذاری بین‌المللی املاک" data-en="Leader in International Real Estate Investment">پیشرو در سرمایه‌گذاری بین‌المللی املاک</p>
+            <div class="hero-badges">
+                <div class="badge">
+                    <i class="fas fa-certificate"></i>
+                    <span data-fa="مجوز رسمی اتحادیه" data-en="Official Union License">مجوز رسمی اتحادیه</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-fa="سرمایه‌گذاری امن" data-en="Secure Investment">سرمایه‌گذاری امن</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-users"></i>
+                    <span data-fa="+500 مشتری راضی" data-en="+500 Happy Clients">+500 مشتری راضی</span>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="tel:+989121799211" class="btn btn-primary">
+                    <i class="fas fa-phone"></i>
+                    <span data-fa="مشاوره رایگان" data-en="Free Consultation">مشاوره رایگان</span>
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    <i class="fas fa-arrow-down"></i>
+                    <span data-fa="کشف خدمات" data-en="Explore Services">کشف خدمات</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="trust-container">
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-award"></i></div>
+                <p class="trust-text" data-fa="برترین کارگزار سال" data-en="Top Agent of the Year">برترین کارگزار سال</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-handshake"></i></div>
+                <p class="trust-text" data-fa="پشتیبانی 24/7" data-en="24/7 Support">پشتیبانی 24/7</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-chart-line"></i></div>
+                <p class="trust-text" data-fa="بازدهی تضمین شده" data-en="Guaranteed Returns">بازدهی تضمین شده</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-globe"></i></div>
+                <p class="trust-text" data-fa="فعالیت بین‌المللی" data-en="International Operations">فعالیت بین‌المللی</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up">
+                    <div class="stat-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label" data-fa="معامله موفق" data-en="Successful Deals">معامله موفق</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label" data-fa="سال سابقه" data-en="Years Experience">سال سابقه</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-icon"><i class="fas fa-store"></i></div>
+                    <div class="stat-number" data-target="3">0</div>
+                    <div class="stat-label" data-fa="شعبه فعال" data-en="Active Branches">شعبه فعال</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-number" data-target="120">0</div>
+                    <div class="stat-label" data-fa="سرمایه‌گذار خارجی" data-en="Foreign Investors">سرمایه‌گذار خارجی</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <h2 class="section-title" data-fa="خدمات ویژه" data-en="Premium Services">خدمات ویژه</h2>
+            <p class="section-subtitle" data-fa="مجموعه کامل خدمات املاک و سرمایه‌گذاری با بالاترین کیفیت" data-en="Complete real estate and investment services with the highest quality">مجموعه کامل خدمات املاک و سرمایه‌گذاری با بالاترین کیفیت</p>
+            <div class="services-grid">
+                <div class="service-card" data-aos="zoom-in">
+                    <div class="service-icon-wrapper"><i class="fas fa-building"></i></div>
+                    <h3 data-fa="خرید آپارتمان در ایران" data-en="Apartment Purchase in Iran">خرید آپارتمان در ایران</h3>
+                    <p data-fa="مشاوره تخصصی و خرید بهترین آپارتمان‌ها در مناطق برتر تهران و سایر شهرهای ایران" data-en="Expert consultation and purchasing the best apartments in prime areas of Tehran and other Iranian cities">مشاوره تخصصی و خرید بهترین آپارتمان‌ها در مناطق برتر تهران و سایر شهرهای ایران</p>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="service-icon-wrapper"><i class="fas fa-umbrella-beach"></i></div>
+                    <h3 data-fa="سرمایه‌گذاری در قبرس شمالی" data-en="North Cyprus Investment">سرمایه‌گذاری در قبرس شمالی</h3>
+                    <p data-fa="فرصت طلایی سرمایه‌گذاری در قبرس با امکان اخذ اقامت و بازدهی بالا" data-en="Golden investment opportunity in Cyprus with residency options and high returns">فرصت طلایی سرمایه‌گذاری در قبرس با امکان اخذ اقامت و بازدهی بالا</p>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="service-icon-wrapper"><i class="fas fa-file-contract"></i></div>
+                    <h3 data-fa="خدمات حقوقی تخصصی" data-en="Expert Legal Services">خدمات حقوقی تخصصی</h3>
+                    <p data-fa="تیم حقوقی متخصص از انتخاب ملک تا انتقال سند رسمی در کنار شما" data-en="Expert legal team with you from property selection to official deed transfer">تیم حقوقی متخصص از انتخاب ملک تا انتقال سند رسمی در کنار شما</p>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="service-icon-wrapper"><i class="fas fa-chart-line"></i></div>
+                    <h3 data-fa="مشاوره سرمایه‌گذاری" data-en="Investment Advisory">مشاوره سرمایه‌گذاری</h3>
+                    <p data-fa="تحلیل دقیق بازار و ارائه بهترین فرصت‌های سرمایه‌گذاری املاک" data-en="Precise market analysis and presenting the best real estate investment opportunities">تحلیل دقیق بازار و ارائه بهترین فرصت‌های سرمایه‌گذاری املاک</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties -->
+    <section class="properties-section" id="properties">
+        <div class="container">
+            <h2 class="section-title" data-fa="املاک منتخب" data-en="Featured Properties">املاک منتخب</h2>
+            <div class="properties-slider">
+                <div class="slider-container" id="propertiesSlider">
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800" alt="Property 1">
+                            <div class="property-badge" data-fa="جدید" data-en="New">جدید</div>
+                        </div>
+                        <div class="property-info">
+                            <h3 data-fa="آپارتمان لوکس تهران" data-en="Luxury Apartment Tehran">آپارتمان لوکس تهران</h3>
+                            <p class="property-location"><i class="fas fa-map-marker-alt"></i> <span data-fa="تهران، الهیه" data-en="Tehran, Elahieh">تهران، الهیه</span></p>
+                            <div class="property-features">
+                                <span><i class="fas fa-bed"></i> 3</span>
+                                <span><i class="fas fa-bath"></i> 2</span>
+                                <span><i class="fas fa-ruler-combined"></i> 150m²</span>
+                            </div>
+                            <div class="property-price" data-fa="تماس بگیرید" data-en="Contact">تماس بگیرید</div>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800" alt="Property 2">
+                            <div class="property-badge" data-fa="ویژه" data-en="Special">ویژه</div>
+                        </div>
+                        <div class="property-info">
+                            <h3 data-fa="ویلا دوبلکس قبرس" data-en="Duplex Villa Cyprus">ویلا دوبلکس قبرس</h3>
+                            <p class="property-location"><i class="fas fa-map-marker-alt"></i> <span data-fa="قبرس، کرنیا" data-en="Cyprus, Kyrenia">قبرس، کرنیا</span></p>
+                            <div class="property-features">
+                                <span><i class="fas fa-bed"></i> 4</span>
+                                <span><i class="fas fa-bath"></i> 3</span>
+                                <span><i class="fas fa-ruler-combined"></i> 250m²</span>
+                            </div>
+                            <div class="property-price" data-fa="تماس بگیرید" data-en="Contact">تماس بگیرید</div>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" alt="Property 3">
+                        </div>
+                        <div class="property-info">
+                            <h3 data-fa="آپارتمان نوساز شیراز" data-en="New Apartment Shiraz">آپارتمان نوساز شیراز</h3>
+                            <p class="property-location"><i class="fas fa-map-marker-alt"></i> <span data-fa="شیراز، صدرا" data-en="Shiraz, Sadra">شیراز، صدرا</span></p>
+                            <div class="property-features">
+                                <span><i class="fas fa-bed"></i> 2</span>
+                                <span><i class="fas fa-bath"></i> 2</span>
+                                <span><i class="fas fa-ruler-combined"></i> 120m²</span>
+                            </div>
+                            <div class="property-price" data-fa="تماس بگیرید" data-en="Contact">تماس بگیرید</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn prev" onclick="slide(-1)"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-btn next" onclick="slide(1)"><i class="fas fa-chevron-left"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title" data-fa="درباره من" data-en="About Me">درباره من</h2>
+                    <div class="about-card">
+                        <div class="golden-border"></div>
+                        <div class="profile-image-container">
+                            <img src="profile.jpg" alt="بهنام شفیعی" class="profile-image">
+                        </div>
+                        <h3 data-fa="بهنام شفیعی" data-en="Behnam Shafiei">بهنام شفیعی</h3>
+                        <p class="about-role" data-fa="مدیرعامل و کارگزار رسمی" data-en="CEO & Official Agent">مدیرعامل و کارگزار رسمی</p>
+                        <ul class="about-features">
+                            <li><i class="fas fa-check-circle"></i> <span data-fa="کارگزار رسمی املاک با مجوز اتحادیه" data-en="Official Real Estate Agent">کارگزار رسمی املاک با مجوز اتحادیه</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-fa="سرمایه‌گذاری امن در ایران و قبرس" data-en="Secure Investment in Iran & Cyprus">سرمایه‌گذاری امن در ایران و قبرس</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-fa="تیم حقوقی متخصص تا انتقال سند" data-en="Expert Legal Team">تیم حقوقی متخصص تا انتقال سند</span></li>
+                        </ul>
+                        <div class="contact-buttons">
+                            <a href="tel:+989121799211" class="contact-btn"><i class="fas fa-phone"></i> +98 912 179 9211</a>
+                            <a href="tel:+905391123468" class="contact-btn"><i class="fas fa-phone"></i> +90 539 112 3468</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container" id="contact">
+                    <h3 data-fa="درخواست مشاوره" data-en="Request Consultation">درخواست مشاوره</h3>
+                    <form id="contactForm" class="contact-form">
+                        <input type="text" id="name" placeholder="نام و نام خانوادگی" data-placeholder-fa="نام و نام خانوادگی" data-placeholder-en="Full Name" required>
+                        <input type="tel" id="phone" placeholder="شماره تماس" data-placeholder-fa="شماره تماس" data-placeholder-en="Phone Number" required>
+                        <select id="interest" required>
+                            <option value="" data-fa="نوع ملک" data-en="Property Type">نوع ملک</option>
+                            <option value="apartment-iran" data-fa="آپارتمان ایران" data-en="Apartment Iran">آپارتمان ایران</option>
+                            <option value="villa-iran" data-fa="ویلا ایران" data-en="Villa Iran">ویلا ایران</option>
+                            <option value="apartment-cyprus" data-fa="آپارتمان قبرس" data-en="Apartment Cyprus">آپارتمان قبرس</option>
+                            <option value="villa-cyprus" data-fa="ویلا قبرس" data-en="Villa Cyprus">ویلا قبرس</option>
+                        </select>
+                        <textarea id="message" placeholder="توضیحات" data-placeholder-fa="توضیحات" data-placeholder-en="Message" rows="4"></textarea>
+                        <button type="submit" class="submit-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <span data-fa="ارسال به واتساپ" data-en="Send via WhatsApp">ارسال به واتساپ</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title" data-fa="نظرات مشتریان" data-en="Client Reviews">نظرات مشتریان</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="testimonial-text" data-fa="با کمک آقای شفیعی موفق به خرید آپارتمان عالی در قبرس شدم. تیم حقوقی فوق‌العاده!" data-en="With Mr. Shafiei's help I bought an excellent apartment in Cyprus. Amazing legal team!">با کمک آقای شفیعی موفق به خرید آپارتمان عالی در قبرس شدم. تیم حقوقی فوق‌العاده!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">م</div>
+                        <div class="author-info">
+                            <h4 data-fa="محمد رضایی" data-en="Mohammad Rezaei">محمد رضایی</h4>
+                            <p data-fa="سرمایه‌گذار - تهران" data-en="Investor - Tehran">سرمایه‌گذار - تهران</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="testimonial-text" data-fa="بهترین مشاور املاک! صادق، دقیق و همیشه در دسترس." data-en="The best real estate consultant! Honest, precise and always available.">بهترین مشاور املاک! صادق، دقیق و همیشه در دسترس.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">س</div>
+                        <div class="author-info">
+                            <h4 data-fa="سارا احمدی" data-en="Sara Ahmadi">سارا احمدی</h4>
+                            <p data-fa="خریدار - اصفهان" data-en="Buyer - Isfahan">خریدار - اصفهان</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="testimonial-text">Excellent service! Very professional and reliable. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Ali Hassan</h4>
+                            <p>Investor - Dubai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title" data-fa="موقعیت دفتر" data-en="Office Location">موقعیت دفتر</h2>
+            <div class="map-container">
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239!2d51.3498!3d35.7448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQ0JzQxLjMiTiA1McKwMjAnNTkuMyJF!5e0!3m2!1sen!2s!4v1234567890" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="map-info">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <div class="map-info-text">
+                        <h3 data-fa="املاک بزرگ آلفا" data-en="Alpha Grand Real Estate">املاک بزرگ آلفا</h3>
+                        <p data-fa="دانشگاه شریف، بلوار تیموری، خیابان حبیب زادگان، پلاک 96" data-en="Sharif Univ., Teymouri Blvd, Habibzadegan St, No. 96">دانشگاه شریف، بلوار تیموری، خیابان حبیب زادگان، پلاک 96</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 data-fa="املاک بزرگ آلفا" data-en="Alpha Grand Real Estate">املاک بزرگ آلفا</h3>
+                    <p data-fa="سرمایه‌گذاری امن، آینده مطمئن" data-en="Secure Investment, Assured Future">سرمایه‌گذاری امن، آینده مطمئن</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://instagram.com/golden_alpha_" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://t.me/behnamshafiei" target="_blank" class="social-btn telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="https://wa.me/989121799211" target="_blank" class="social-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span data-fa="املاک بزرگ آلفا. تمامی حقوق محفوظ است." data-en="Alpha Grand Real Estate. All rights reserved.">املاک بزرگ آلفا. تمامی حقوق محفوظ است.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Loading
+        let progress = 0;
+        const loader = document.getElementById('loader');
+        const loaderProgress = document.getElementById('loaderProgress');
+        const interval = setInterval(() => {
+            progress += 10;
+            loaderProgress.style.width = progress + '%';
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                }, 500);
+            }
+        }, 150);
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // Particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particles.appendChild(p);
+            }
+        }
+
+        // Stats
+        function animateStats() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        let current = 0;
+                        const timer = setInterval(() => {
+                            current += target / 100;
+                            if (current >= target) {
+                                entry.target.textContent = target + '+';
+                                clearInterval(timer);
+                            } else {
+                                entry.target.textContent = Math.floor(current);
+                            }
+                        }, 20);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
+        }
+
+        // Slider
+        function slide(dir) {
+            const slider = document.getElementById('propertiesSlider');
+            slider.scrollBy({ left: dir * 400, behavior: 'smooth' });
+        }
+
+        // Form
+        document.getElementById('contactForm')?.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const interest = document.getElementById('interest').value;
+            const message = document.getElementById('message').value;
+            const lang = document.documentElement.lang;
+            const map = {
+                'apartment-iran': { fa: 'آپارتمان ایران', en: 'Apartment Iran' },
+                'villa-iran': { fa: 'ویلا ایران', en: 'Villa Iran' },
+                'apartment-cyprus': { fa: 'آپارتمان قبرس', en: 'Apartment Cyprus' },
+                'villa-cyprus': { fa: 'ویلا قبرس', en: 'Villa Cyprus' }
+            };
+            const interestText = interest && map[interest] ? map[interest][lang] : '';
+            const msg = lang === 'fa'
+                ? `سلام\nنام: ${name}\nتلفن: ${phone}\nملک: ${interestText}${message ? '\n' + message : ''}`
+                : `Hello\nName: ${name}\nPhone: ${phone}\nProperty: ${interestText}${message ? '\n' + message : ''}`;
+            window.open(`https://wa.me/989121799211?text=${encodeURIComponent(msg)}`, '_blank');
+            e.target.reset();
+        });
+
+        // Language
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.documentElement.setAttribute('lang', lang);
+                document.documentElement.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
+                document.querySelectorAll('[data-fa]').forEach(el => {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = el.getAttribute(`data-placeholder-${lang}`);
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = el.getAttribute(`data-${lang}`);
+                    } else {
+                        el.textContent = el.getAttribute(`data-${lang}`);
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            animateStats();
+            AOS.init({ duration: 800, once: true });
+        });
+    </script>
+</body>
+</html>
